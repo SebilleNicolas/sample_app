@@ -11,7 +11,7 @@ def about
   	@titre = "Contact"
   end
 
-  def help
-  	@titre = "Aide"
+  def profil
+  	@titre = "Profil"
   end
 end
