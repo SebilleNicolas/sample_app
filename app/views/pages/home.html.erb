@@ -1,9 +1,10 @@
-<h1>Application Exemple</h1>
+<h1>Liste Imprimante</h1>
 
 <p>
-  C'est la page d'accuile pour l'application exemple du
-  <a href="http://railstutorial.org/">Tutoriel Ruby on Rails</a>.
+  C'est la page d'acceuil pour tous les utilisateurs
 </p>
+
+</br></br></br></br></br>
 <!--
 <div id="flash">
 	<button type="button" class="btn btn-primary">Primary</button>
@@ -17,89 +18,100 @@
 </div>
 
 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
-
-
-<div class="dropdown">
-  <a data-toggle="dropdown" href="#">Dropdown trigger</a>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-    dazda
-  </ul>
-   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-    dazda
-  </ul>
-</div>
-
-
-<div class="dropdown">
-  <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-    Dropdown <span class="caret"></span>
-  </a>
-
-
-  <ul class="dropdown-menu" data-toggle="dropdown" role="menu" aria-labelledby="dLabel">
-  ejjhjhjhjhjhts
-  </ul>
-
-  <ul class="dropdown-menu" data-toggle="dropdown" role="menu" aria-labelledby="dLabel">
-  fs
-  </ul>
-
-</div>-->
-
 <%= link_to "S'inscrire!", '#', :class => "signup_button round" %>
 
+
+
+
+-->
+
+
+
 <!-- Nav tabs -->
+<div class="dropdown">
 <ul class="nav nav-tabs" role="tablist">
   <li class="active"><a href="#descriptImprimante" role="tab" data-toggle="tab">Description Imprimante</a></li>
   <li><a href="#incident" role="tab" data-toggle="tab">Incident</a></li>
   <li><a href="#consommable" role="tab" data-toggle="tab">Consommable</a></li>
   <li><a href="#compteur" role="tab" data-toggle="tab">Compteur</a></li>
+ 
+  <li class ="dropdown">
+
+      <a id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" href="#">Ajouter 
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+        
+             <li class=""> 
+               <a href="#ajouterIncident" role="tab" data-toggle="tab"> Incident</a>
+             </li>
+            <li><a href="#ajouterConsommable" role="tab" data-toggle="tab">Consommable</a></li>
+        </ul>
+        
+    
+  </li>
+
 </ul>
 
 
 
 <!-- Tab panes -->
 <div class="tab-content">
-  <div class="tab-pane active" id="descriptImprimante">
+  <div class="tab-pane  fade in active" id="descriptImprimante" border-radius="10px">
 
 </br>
-    Description de l'imprimante
+    
+<h2>Description de l'imprimante</h2>
+<p> blablabla
+
+</p>
+
+
+  </div>
+
+
+  <div class="tab-pane fade" id="incident">
+
+    
+<h2>Incidents de l'imprimante</h2>
+<p> Tous les incidents des imprimantes. </p>
 
 
 
   </div>
+  <div class="tab-pane fade" id="consommable">
 
-
-  <div class="tab-pane" id="incident">
-
-    Incidents de l'imprimante
-
-
-
-
-
-  </div>
-  <div class="tab-pane" id="consommable">
-
-
-   Consommable de l'imprimante
-
+<h2>Consommable de l'imprimante</h2>
+   
+<p> Tous les consommables des imprimantes. </p>
 
 
 
   </div>
-  <div class="tab-pane" id="compteur">
+  <div class="tab-pane fade" id="compteur">
 
 
 
+<h2> Manip Relevé Compteur ?</h2>
+   
 
-   Manip Relevé Compteur ?
 
-
-
+<p> Onglet destiné a indiqué la manipulation des relevé compteur ? </p>
 
 
 
   </div>
+   <div class="tab-pane fade" id="ajouterIncident">
+
+<h2> AJOUTER INCIDENT</h2>
+
+
+</div>
+
+ <div class="tab-pane fade" id="ajouterConsommable">
+
+<h2>AJOUTER Consommable</h2>
+
+
+</div>
+
 </div>

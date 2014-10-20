@@ -14,4 +14,14 @@ def about
   def profil
   	@titre = "Profil"
   end
+  def recherche
+    @titre = "Recherche"
+  end
+  def inscription
+    @titre = "Inscription"
+  end
+  def inscrip2
+    @titre = "Inscription 2"
+  end
+  
 end

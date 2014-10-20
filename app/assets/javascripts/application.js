@@ -23,14 +23,14 @@
 //   }, 50000);
 //  });
 
-$(function () { $("[data-toggle='popover']").popover(); });
 
 $('.dropdown-toggle').dropdown();
+
 
 $('#myTab a').click(function (e) {
   e.preventDefault()
   $(this).tab('show')
-})
+});
 
 //$('#myTab a[href="#profile"]').tab('show') // Select tab by name
 //$('#myTab a:first').tab('show') // Select first tab

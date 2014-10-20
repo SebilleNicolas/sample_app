@@ -1,11 +1,13 @@
 <header>
-  <% logo = image_tag("logo.png", :alt => "Application exemple", :class => "round") %>
+	<!-- image_tag("logo.png", :alt => "Application exemple", :class => "round") --></br>
+  <% logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round") %>
   <%= link_to logo,   :controller => :pages, :action => :home %>
   <nav class="round">
     <ul>
-      <li><%= link_to "Liste Imprimante",  :controller => :pages, :action => :home %></li>
-      <li><%= link_to "Profil", :controller => :pages, :action => :profil %></li>
-      <li><%= link_to "Rechercher", '#' %></li>
+      <li><span class="glyphicon glyphicon-th-list"></span><%= link_to "Liste Imprimante",  :controller => :pages, :action => :home %></li>
+      <li><span class="glyphicon glyphicon-user"></span><%= link_to "Profil", :controller => :pages, :action => :profil %></li>
+      <li><span class="glyphicon glyphicon-search"></span><%= link_to "Rechercher",  :controller => :pages, :action => :recherche %></li>
     </ul>
   </nav>
 </header>
+

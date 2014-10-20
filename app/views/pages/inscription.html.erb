@@ -1,9 +1,21 @@
-<h2 align="center">PROFIL</h2>
-<p>
- Page de Profil (Remplir les champs automatiquement de la Base de donnée)
-</p>
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+  Inscription
+</button>
 
- <form class="form-horizontal" role="form">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel" align="center">Formulaire Inscription</h4>
+      </div>
+      <div class="modal-body">
+        
+
+            
+      <form class="form-horizontal" role="form">
         <div class="form-group">
           <label class="control-label col-sm-2" for="email">Email:</label>
           <div class="col-sm-10">
@@ -52,3 +64,42 @@
         </div>
         
       </form>
+      </div>
+      <div class="modal-footer" align="center">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Inscription</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="container" style="border:2px;">
+<div class="row">
+<div class="col-sm-6 col-md-4 col-md-offset-4">
+<h1 class="text-center login-title">Connexion</h1></br></br>
+<div class="account-wall">
+
+<form class="form-signin">
+<input type="text" class="form-control" placeholder="Email ou pseudo" required autofocus>
+<input type="password" class="form-control" placeholder="Password" required></br>
+<button class="btn btn-lg btn-primary btn-block" type="submit" >
+Valider</button>
+<label class="checkbox pull-left">
+</br>
+<input type="checkbox" value="remember-me">
+Remember me
+</label>
+</form>
+</div>
+
+</div>
+</div>
+
+</div>

@@ -1,5 +1,5 @@
 .container {
-  width: 710px;
+  width: 1000px;
 }
 
 body {
@@ -116,3 +116,26 @@ footer nav {
 }
 
 
+.form-control{
+border: 1px solid grey;
+margin-top: 10px;
+margin-left: 10px;
+}
+
+
+
+table
+{
+  border: 1px solid black;
+  margin: auto;
+}
+.glyphicon{
+ -moz-border-radius:    10px;
+  -webkit-border-radius: 10px;
+  border-radius:         10px;
+  color: #09c;
+}
+#barreRecherche {
+  margin-top: 0px;
+margin-left: 0px;
+}
