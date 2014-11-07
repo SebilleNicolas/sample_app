@@ -1,0 +1,30 @@
+
+<table align="center" style="width: 500px;">
+        <thead>
+          <tr>
+            <td align="center">
+              <b> ID </b>
+            </td>
+            <td align="center" >
+              <b> CodeIncident qzdzqd</b>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+           <% @incidents.each do |incident| %>
+          <tr>
+            <td align="center">
+              <%= link_to incident.id, incident%>
+            </td>
+            <td align="center">
+              
+            </td>
+          </tr>
+            
+        <% end %>
+
+        </tbody>
+       
+
+      </table>
+      

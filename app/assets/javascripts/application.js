@@ -26,6 +26,8 @@
 
 $('.dropdown-toggle').dropdown();
 
+$('.alert').alert("close");
+
 
 $('#myTab a').click(function (e) {
   e.preventDefault()

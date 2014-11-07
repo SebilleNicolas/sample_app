@@ -1,13 +1,63 @@
 <header>
 	<!-- image_tag("logo.png", :alt => "Application exemple", :class => "round") --></br>
   <% logo =  image_tag("KM.png", :alt => "Konica Minolta", :class => "round") %>
-  <%= link_to logo,   :controller => :pages, :action => :home %>
-  <nav class="round">
-    <ul>
-      <li><span class="glyphicon glyphicon-th-list"></span><%= link_to "Liste Imprimante",  :controller => :pages, :action => :home %></li>
-      <li><span class="glyphicon glyphicon-user"></span><%= link_to "Profil", :controller => :pages, :action => :profil %></li>
-      <li><span class="glyphicon glyphicon-search"></span><%= link_to "Rechercher",  :controller => :pages, :action => :recherche %></li>
-    </ul>
-  </nav>
+  <%= link_to logo,   root_path %>
+
+  <% if user_signed_in? %>
+    <nav class="round">
+      <ul>
+      <% if can? :create, Printer %>
+        <li><span class="glyphicon glyphicon-plus"></span><%= link_to "Ajouter Imprimante", ajouterImprimante_path %></li>
+        <% end %>
+        <li><span class="glyphicon glyphicon-th-list"></span><%= link_to "Liste Imprimante", index_path %></li>
+        <li><span class="glyphicon glyphicon-user"></span><%= link_to "Profil", edit_user_registration_path %></li>
+        <li><span class="glyphicon glyphicon-search"></span><%= link_to "Rechercher", recherche_path %></li>
+        <li><span class="glyphicon glyphicon-log-out"></span><%= link_to "Déconnexion", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
+        </br>
+      <table align="right" style="border:none; height: 50px;" >
+        <tr>
+          <td>
+             <p align="right">  Vous êtes connecté en tant que : </p> 
+          </td>
+          <td>
+            <p align="center">&nbsp; <strong><%= current_user.last_name %> , <%=current_user.first_name %></strong> </p>
+          </td>
+        </tr>
+         <tr>
+          <td>
+            <p align="right">  Votre statut est :  </p>
+          </td>
+          <td>
+           <p align="center"> <strong><%= current_user.role %></strong> </p>
+          </td>
+        </tr>
+          <tr>
+          <td>
+            <p align="right">  Email :  </p>
+          </td>
+          <td>
+           <p align="center"> <strong><%= current_user.email %></strong> </p>
+          </td>
+        </tr>
+      </table>
+   
+    
+    
+  <% else %>
+    <nav class="round">
+        <ul>
+       
+          <%= link_to "inscription", new_user_registration_path  %>
+           <!-- <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+        </button> -->
+           |
+          <%= link_to "Connexion", new_user_session_path, :class => 'navbar-link'  %>
+        </ul>
+    </nav>
+  <% end %>
+
+  
+  
 </header>
+</br></br>
 

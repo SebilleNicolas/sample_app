@@ -1,10 +1,15 @@
 class User < ActiveRecord::Base
-	
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+	validates :password, presence: true, length: {minimum: 2, maximum: 120}, on: :create
+	validates :password, length: {minimum: 2, maximum: 120}, on: :update, allow_blank: true
+	 ROLES = %w[ADMIN HL1 HL2 SAV]
 
-  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :nom,  :presence => true,
-                    :length   => { :maximum => 50 }
-  validates :email, :presence => true,
-                    :format   => { :with => email_regex }
+	def is?( requested_role )
+    self.role == requested_role.to_s
+  end
+
 end

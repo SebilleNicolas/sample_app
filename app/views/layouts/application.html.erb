@@ -9,6 +9,15 @@
     <div class="container">
       <%= render 'layouts/header' %>
       <section class="round">
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+
+      <!-- <p style="color: green"> </p> -->
+
         <%= yield %>
       </section>
       <%= render 'layouts/footer' %>
