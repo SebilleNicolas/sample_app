@@ -1,0 +1,107 @@
+%p Entrez le code le l'imprimante a rechercher :
+= simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+
+  / =f.input :name
+  = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false , placeholder: "Entrez le code le l'imprimante"
+
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th ID
+      %th CodeImprimante
+      %th Nombre Incidents
+      %th Nombre Consommables
+  %tbody
+    - @printers.each do |printer|
+      %tr
+        %td= link_to printer.id, printer
+        %td= link_to printer.code_printers, printer
+        %td= link_to printer.incidents.count, printer
+        %td= link_to printer.consommables.count, printer
+  / %tfoot
+  /   %tr
+  /     %td{:colspan => "2"} Entrez le code le l'imprimante a rechercher :
+  /     %td{:colspan => "2"}
+  /       = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+  /         = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false 
+
+     
+
+/ %table{:align => "center", :style => "width: 500px; border: none"}
+/   %thead
+/     %tr
+/       %td{:align => "center"}
+/         %b ID
+/       %td{:align => "center"}
+/         %b CodeImprimante
+/       %td{:align => "center"}
+/         %b Nombre Incidents
+/       %td{:align => "center"}
+/         %b Nombre Consommables
+/   %tbody
+/     - @printers.each do |printer|
+/       %tr
+/         %td{:align => "center"}
+/           = link_to printer.id, printer
+/         %td{:align => "center"}
+/           = link_to printer.code_printers, printer
+/         %td{:align => "center"}
+/           = link_to printer.incidents.count, printer
+/         %td{:align => "center"}
+/           = link_to printer.consommables.count, printer
+
+%br/
+
+
+
+/ = simple_form_for @printer, url: search_printers_path(@printer), method: :get do |f|  
+/   = f.autocomplete_field :id, autocomplete_printer_code_printers_printers_path,:size => 75, :"data-autocomplete-label" => false 
+/
+
+/ - @printer_consommables.each do |pc|
+/   = pc.consommable_id
+
+
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+/ %table.table.table-bordered
+/   %thead
+/     %tr
+/       %th #
+/       %th First Name
+/       %th Last Name
+/       %th Username
+/   %tbody
+/     %tr
+/       %td{:rowspan => "2"} 1
+/       %td Mark
+/       %td Otto
+/       %td @mdo
+/     %tr
+/       %td Mark
+/       %td Otto
+/       %td @TwBootstrap
+/     %tr
+/       %td 2
+/       %td Jacob
+/       %td Thornton
+/       %td @fat
+/     %tr
+/       %td 3
+/       %td{:colspan => "2"} Larry the Bird
+/       %td @twitter

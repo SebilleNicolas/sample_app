@@ -15,8 +15,8 @@
  public | printers_id_seq                     | sequence | nicolas
  public | questions                           | table    | nicolas
  public | questions_id_seq                    | sequence | nicolas
- public | releve_compteurs                    | table    | nicolas
- public | releve_compteurs_id_seq             | sequence | nicolas
+ public | releves_compteurs                    | table    | nicolas
+ public | releves_compteurs_id_seq             | sequence | nicolas
  public | schema_migrations                   | table    | nicolas
  public | user_visite_arbre_decisions         | table    | nicolas
  public | user_visite_arbre_decisions_id_seq  | sequence | nicolas
@@ -24,8 +24,8 @@
  public | user_visite_consommables_id_seq     | sequence | nicolas
  public | user_visite_incidents               | table    | nicolas
  public | user_visite_incidents_id_seq        | sequence | nicolas
- public | user_visite_releve_compteurs        | table    | nicolas
- public | user_visite_releve_compteurs_id_seq | sequence | nicolas
+ public | user_visite_releves_compteurs        | table    | nicolas
+ public | user_visite_releves_compteurs_id_seq | sequence | nicolas
  public | users                               | table    | nicolas
  public | users_id_seq                        | sequence | nicolas
 (27 rows)

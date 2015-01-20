@@ -1,0 +1,554 @@
+%h3
+  Imprimante :
+  - if current_user.is? :ADMIN
+    = simple_form_for(@printer, url: update_code_printers_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier le code de l'imprimante ?" }, method: :patch) do |f|
+      %b
+        = f.input :code_printers , :input_html => { :style => "width:250px" }, label: false, value: @printer.code_printers
+        = f.button :submit, class: "btn btn-primary", value:'Modifier'
+  - else
+    %b= @printer.code_printers      
+
+%h3
+  NbIncident  :
+  %b
+    = @NbIncident
+
+%h3
+  NbConso de l'imprimante  :
+  %b
+    = @Nbconsommable
+/ %h3
+/   Nom image de l'imp  :
+/   %b
+/     = @printer.img
+/ %p
+/
+/ Nav tabs
+.dropdown
+  %ul#myTab.nav.nav-tabs{:role => "tablist"}
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#descriptImprimante", :role => "tab"} Description Imprimante
+    - if current_user.is? :ADMIN
+      %li.dropdown
+        %a#myTabDrop1.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          Incident
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
+          %li
+            %a{"data-toggle" => "tab", :href => "#incidentTrue", :role => "tab"} Incident Valider
+          %li
+            %a{"data-toggle" => "tab", :href => "#incidentFalse", :role => "tab"} Incident Non Valider
+    - else
+      %li
+        %a{"data-toggle" => "tab", :href => "#incidentTrue", :role => "tab"} Incidents
+
+
+    - if can? :valide, Consommable
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          Consommable
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
+          %li
+            %a{"data-toggle" => "tab", :href => "#consommableTrue", :role => "tab"} Consommable Valider
+          %li
+            %a{"data-toggle" => "tab", :href => "#consommableFalse", :role => "tab"} Consommable Non Valider
+    - else
+      %li
+        %a{"data-toggle" => "tab", :href => "#consommableTrue", :role => "tab"} Consommables
+
+
+    - if can? :valide, Printer
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          Compteur
+          %span.caret
+        %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
+          %li
+            %a{"data-toggle" => "tab", :href => "#compteurTrue", :role => "tab"} Compteur Valider
+          %li
+            %a{"data-toggle" => "tab", :href => "#compteurFalse", :role => "tab"} Compteur Non Valider
+    - else
+      %li
+        %a{"data-toggle" => "tab", :href => "#compteurTrue", :role => "tab"} Compteurs
+    
+    
+    %li.dropdown
+      - if can? :create, Incident
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          Ajouter
+          %span.caret
+      %ul.dropdown-menu{"aria-labelledby" => "myTabDrop1", :role => "menu"}
+        %li
+          %a{"data-toggle" => "tab", :href => "#ajouterIncident", :role => "tab"} Incident
+        %li
+          %a{"data-toggle" => "tab", :href => "#ajouterConsommable", :role => "tab"} Consommable
+        %li
+          %a{"data-toggle" => "tab", :href => "#ajouterCompteur", :role => "tab"} Compteur
+       
+  / Tab panes
+  .tab-content
+    / Onglet DESCRIPTION IMPRIMANTE
+    #descriptImprimante.tab-pane.fade.in.active{"border-radius" => "10px"}
+      %h2
+        %u Description de l'imprimante :
+      %br/
+      - if @printer.attachments.count > 0
+        / ****************** Slide des images : ******************
+        #carousel-example-generic.carousel.slide{:style => "width:250px; float:left;","data-ride" => "carousel", "data-spy" => "scroll"}
+          / Indicators
+          %ol.carousel-indicators
+            %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+            - for i in 1..@attachments.count - 1
+              - if File.extname(@attachments[i].file.to_s) != ".pdf"
+                %li{"data-slide-to" => "i", "data-target" => "#carousel-example-generic"}
+              / %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+              / %li{"data-slide-to" => "3", "data-target" => "#carousel-example-generic"}
+            
+          / Wrapper for slides
+          .carousel-inner{:role => "listbox"}
+            - if @attachments.count > 0
+              .item.active
+                = image_tag(@attachments[0].file_url(:thumb),:style => "margin-left:70px;")
+                / = image_tag(@printer.img_url(:thumb),:style => "margin-left:70px;")
+                %p
+                  = File.basename(@attachments[0].file.to_s)
+                .carousel-caption
+                
+                  / = image_tag(@attachments[1].file,:style => "margin-left:70px;")
+              - @attachments.each do |a|
+                - if a.file != @attachments[0].file && File.extname(a.file.to_s) != ".pdf"
+                  .item
+                    = image_tag(a.file_url(:thumb),:style => "margin-left:70px;")
+                    %p
+                      = File.basename(a.file.to_s)
+                / .item
+                /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
+                / .item
+                /   = image_tag(@attachments[2].file,:style => "margin-left:70px;")
+          / Controls
+          %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic", :role => "button"}
+            %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
+            %span.sr-only Previous
+          %a.right.carousel-control{"data-slide" => "next", :href => "#carousel-example-generic", :role => "button"}
+            %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+            %span.sr-only Next
+        
+          / = @printer.description_printers
+
+      / ****************** Description du Printer : ******************
+      - if current_user.is? :ADMIN
+        = simple_form_for(@printer, url: update_description_printer_path(params[:id]),data: { confirm: "Etes vous sur de vouloir modifier la description ?" }, method: :patch) do |f|
+          %table.table-bordered{:style => "margin-left: inherit;"}
+            %tr
+              %td
+                = f.cktext_area :description_printers , :spellcheck => false, :required => true , :value => @printer.description_printers
+            %tr
+              %td
+                %br
+                %br
+                %table.table-bordered{:style => "margin-left: 0px;width:300px;"}
+                  %thead
+                  %th nom
+                  %th Choisir fichier
+                  %th Supprimer
+                  = f.simple_fields_for :attachments , @attachments  do |p| 
+                    
+                    %tbody
+                      %tr
+                        - if File.extname(@printer.attachments[p.index].file.to_s) != ".pdfr"
+                          %td
+                            / Button trigger modal
+                            = link_to("#{File.basename(@printer.attachments[p.index].file.to_s)}", printer_download_path(:printer_id => @printer.id, :id => @printer.attachments[p.index].file.to_s ))
+                            / = link_to 'Show', @attachments, :action => :download, :input_html => {:target => "_blank"}
+                        - else
+                          %td 
+                            = File.basename(@printer.attachments[p.index].file.to_s)
+                        %td
+                          = p.input :file, as: :file, label: false
+                        %td 
+                          = link_to 'Supprimer', @printer.attachments[p.index], :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'image'?" },:class => 'delete_attachment'
+   
+            %tr
+              %td
+                = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary btn-block"
+        %br/
+        %br/
+        %br/
+        %button.btn.btn-primary.btn-lg{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
+          Ajouter Nouvelle Piece Jointe
+        / Modal
+        #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1" }
+          .modal-dialog
+            .modal-content{:style => "height:300px;"} 
+              .modal-header
+                %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+                  %span{"aria-hidden" => "true"} 
+                %h4#myModalLabel.modal-title Ajouter une nouvelle piece jointe
+              .modal-body
+                = simple_form_for @attachment do |f|
+                  %table{:align => "left", :style => "border : none;"}
+                    %tr
+                      %td
+                        / = f.label "Ajouter nouvelle image"
+                        = f.input :file, as: :file
+                        = f.hidden_field :printer_id, :value => @printer.id
+                      %td
+                        %span.input-group-btn
+                          %button.btn.btn-default{"data-dismiss" => "modal", :type => "button", :style => "margin-right:30px;"} Close
+                          = f.button :submit, "Valider" , class: "btn btn-lg btn-primary "
+              
+
+      - else
+        %p
+          = cktext_area_tag :description_printers ,  @printer.description_printers, disabled: true
+      /
+        <div class="form-group">
+        <label for="exampleInputFile">Choisir un fichier :</label>
+        <input type="file" id="exampleInputFile">
+        
+        </div>
+    / Fin de l'onglet
+    / Onglet INCIDENT
+    #incidentTrue.tab-pane.fade
+      %h2{:align => "center"} Incidents de l'imprimante :
+      - if @incidents_true.count >= 1
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th ID
+              %th CodeIncident
+              %th Statut
+              - if current_user.is? :ADMIN
+                %th Supprimer 
+          %tbody
+            - @incidents_true.each do |incident|
+              %tr
+                %td= link_to incident.id, incident
+                %td= link_to incident.code_incidents, incident
+                %td= link_to "VALIDER", incident
+                - if current_user.is? :ADMIN 
+                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+     
+      - else
+        %p Il n'y a pas d'incident.
+    / Fin de l'onglet
+    #incidentFalse.tab-pane.fade
+      %h2{:align => "center"} Incidents de l'imprimante :
+      - if @incidents_false.count >= 1
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th ID
+              %th CodeIncident
+              %th Statut
+              - if current_user.is? :ADMIN
+                %th Supprimer 
+          %tbody
+            - @incidents.each do |incident|
+              %tr
+                %td= link_to incident.id, incident
+                %td= link_to incident.code_incidents, incident
+                %td= link_to "non Valider", incident
+                - if current_user.is? :ADMIN 
+                  %td= link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+      - else        
+        %p Il n'y a pas d'incident a valider.
+    / Fin de l'onglet
+    #consommableFalse.tab-pane.fade
+      %h2 Consommable de l'imprimante
+      - if @consommables_false.count >= 1
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th CodeConsommable
+              %th DesignationConsommable
+              %th Durée de vie
+              - if current_user.is? :ADMIN
+                %th Supprimer 
+          %tbody
+            - @consommables_false.each do |consommable|
+              %tr
+                %td= link_to  consommable.code_consommables , consommable
+                %td= link_to  consommable.designation_consommables,consommable
+                %td= link_to  consommable.duree_vie_consommables,consommable
+                - if current_user.is? :ADMIN 
+                  %td= link_to 'Supprimer', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable?" },:class => 'delete_consommable'
+       
+      - else
+        %p Il n'y a pas de consommable a valider.
+    / Fin de l'onglet
+    / Onglet CONSOMMABLE
+    #consommableTrue.tab-pane.fade
+      %h2 Consommable de l'imprimante
+      - if @consommables_true.count >= 1
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th CodeConsommable
+              %th DesignationConsommable
+              %th Durée de vie
+              - if current_user.is? :ADMIN
+                %th Supprimer 
+          %tbody
+            - @consommables_true.each do |consommable|
+              %tr
+                %td= link_to  consommable.code_consommables , consommable
+                %td= link_to  consommable.designation_consommables,consommable
+                %td= link_to  consommable.duree_vie_consommables,consommable
+                - if current_user.is? :ADMIN 
+                  %td= link_to 'Supprimer', consommable, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer le consommable?" },:class => 'delete_consommable'
+        
+      - else
+        %p Il n'y a pas de consommable à valider.
+    / Fin de l'onglet
+    / Onglet COMPTEUR Valider
+    #compteurTrue.tab-pane.fade
+      %h2 Manip Relevé Compteur
+      - if @releves_compteurs_true.count >= 1
+        %table{:align => "center", :style => "width: 500px; border:none;"}
+          %thead
+            %tr
+              %td{:align => "center"}
+                ID PRINTER
+              %td{:style => "vertical-align: center;"}
+                Description
+              
+          %tbody
+            - @releves_compteurs_true.each do |releve_compteur|
+              %tr
+                %td{:align => "center"}
+                  = link_to  releve_compteur.printer_id , releve_compteur
+                %td{:align => "center"}
+                  = link_to  releve_compteur.description_releve_compteurs,releve_compteur
+                
+      - else
+        %p Il n'y a pas de releve compteur.
+      
+    / Fin de l'onglet
+    #compteurFalse.tab-pane.fade
+      %h2 Compteur Non valider
+      - if @releves_compteurs_false.count >= 1
+        %table{:align => "center", :style => "width: 500px; border:none;"}
+          %thead
+            %tr
+              %td{:align => "center"}
+                ID PRINTER
+              %td{:style => "vertical-align: center;"}
+                Description
+              
+          %tbody
+            - @releves_compteurs_false.each do |releve_compteur|
+              %tr
+                %td{:align => "center"}
+                  = link_to  releve_compteur.printer_id , releve_compteur
+                %td{:align => "center"}
+                  = link_to  releve_compteur.description_releve_compteurs,releve_compteur
+                
+      - else
+        %p Il n'y a pas de releve compteur a valider .
+      
+
+
+
+
+
+
+
+
+
+    / Onglet AJOUTERINCIDENT
+    #ajouterIncident.tab-pane.fade
+      %h2 AJOUTER INCIDENT
+      = simple_form_for @incident do |f|
+        .CSSTableGenerator
+          .table-responsive
+            %table.table
+              %tr
+                %td Code Incident :
+                %td Intitulé Incident :
+              %tr
+                %td.info
+                  .col-md-9{:style => "width: 100%"}
+                    .form-group
+                      = f.input :code_incidents ,label: false,:input_html => { :size => 40, :maxlength => 20, :required => true }
+                    / /.col-lg-6
+                  / /.row
+                %td{}
+                  .col-md-9{:style => "width: 100%"}
+                    .form-group
+                      = f.input :intitule_incidents ,label: false, :input_html => { :size => 40, :maxlength => 20, :required => true }
+                    / /.col-lg-6
+                  / /.row
+            %table.table.table-bordered
+              %tr
+                %td Description :
+                %td Solution :
+              %tr
+                %td
+                  = f.cktext_area :description_incidents , :required => true, input_html: {style: "width: 400px;"}
+                %td
+                  = f.cktext_area :solution_incidents , :required => true
+                  = f.hidden_field :printer_id, :value => @printer.id
+                  = f.hidden_field :valide_incidents, :value => false
+              %tr
+                %td{:colspan => "2"}
+                  .modal-footer{:align => "center"}
+                    = f.button :submit, class: "btn btn-primary", :value => 'Valider'
+      / ------------------------- Fin div css GENERATOR -------------------------
+    / Fin de l'onglet AJOUTERINCIDENT
+    / ---------------------- PAGE CONSOMMABLE     ----------------------
+    #ajouterConsommable.tab-pane.fade
+      %h2 Ajouter Consommable
+      / Nav tabs
+      %ul.nav.nav-tabs{:role => "tablist"}
+        %li.active
+          %a{"data-toggle" => "tab", :href => "#addConso", :role => "tab"} Ajouter Consommable
+        %li
+          %a{"data-toggle" => "tab", :href => "#searchConso", :role => "tab"} Rechercher Consommable existant
+      / Tab panes
+      .tab-content
+        #addConso.tab-pane.fade.in.active
+          = simple_form_for @consommable do |f|
+            .CSSTableGenerator
+              %table
+                %tr
+                  %td Code :
+                  %td Designation :
+                  %td Durée de vie (page):
+                %tr
+                  %td
+                    .col-md-9{:style => "width: 100%"}
+                      .form-group
+                        = f.input :code_consommables, label: false ,:input_html => { :size => 40, :maxlength => 20 }
+                      / /.col-lg-6
+                    / /.row
+                  %td
+                    .col-md-9{:style => "width: 100%"}
+                      .form-group
+                        = f.input :designation_consommables, label: false ,:input_html => { :size => 40, :maxlength => 500 }
+                      / /.col-lg-6
+                    / /.row
+                    %td
+                      .col-md-9{:style => "width: 100%"}
+                        .form-group
+                          = f.input :duree_vie_consommables, label: false,:input_html => { :min => "0",   :type => "number", :value => "0"}
+                          
+
+
+              = f.hidden_field :printer_id, :value => @printer.id
+              = f.hidden_field :consommable_id, :value => @consommable.id
+              = f.hidden_field :valide_consommables, :value => false
+              %table
+                %tr
+                %tr
+                  %td
+                    .modal-footer{:align => "center"}
+                      = f.button :submit, class: "btn btn-primary", :value => 'Valider'
+        #searchConso.tab-pane.fade
+          / .CSSTableGenerator
+          /   %table
+          /     %tr
+          /       %td Code :
+          /       %td
+          /       %td Designation :
+          /       %td
+          /     %tr
+          /       %td
+          /         .col-md-9{:style => "width: 100%"}
+          /           .form-group
+          /             %input#barreRecherche.form-control{:type => "text"}/
+          /           / /.col-lg-6
+          /         / /.row
+          /       %td
+          /         %button.boutton
+          /           %span.glyphicon.glyphicon-ok
+          /       %td
+          /         .col-md-9{:style => "width: 100%"}
+          /           .form-group
+          /             %input#barreRecherche.form-control{:type => "text"}/
+          /           / /.col-lg-6
+          /         / /.row
+          /       %td
+          /         %button.boutton
+          /           %span.glyphicon.glyphicon-ok
+          - if @Nbconsommable == 0
+            - if @consommables_vide_search.count < 1
+              %p il n'y a pas de consommable a ajouté
+            - else
+              %table.table.table-bordered
+                %thead
+                  %tr
+                    %th id
+                    %th Code Consommables
+                    %th Designation Consommable 
+                    %th Valider
+                %tbody
+                  - @consommables_vide_search.each do |consommable|
+                    %tr
+                      %td= consommable.id
+                      %td= consommable.code_consommables
+                      %td= consommable.designation_consommables
+                      %td
+                        = simple_form_for @printers_consommable  do |f|
+                          = f.hidden_field :printer_id, :value => @printer.id
+                          = f.hidden_field :consommable_id, :value => consommable.id
+                          = f.button :submit, class: "btn btn-primary", data: { confirm: "Etes vous sur de vouloir ajouter ce consommable dans le printer actuel ?" },:value => 'Valider' 
+          - else
+            - if @consommables_search.count < 1
+              %p il n'y a pas de consommable a ajouté
+            - else
+              %table.table.table-bordered
+                %thead
+                  %tr
+                    %th id
+                    %th Code Consommables
+                    %th Designation Consommable 
+                    %th Valider
+                %tbody
+                  - @consommables_vide_search.each do |consommable|
+                    %tr
+                      %td= consommable.id
+                      %td= consommable.code_consommables
+                      %td= consommable.designation_consommables
+                      %td
+                        = simple_form_for @printers_consommable  do |f|
+                          = f.hidden_field :printer_id, :value => @printer.id
+                          = f.hidden_field :consommable_id, :value => consommable.id
+                          = f.button :submit, class: "btn btn-primary", data: { confirm: "Etes vous sur de vouloir ajouter ce consommable dans le printer actuel ?" },:value => 'Valider' 
+    / -----------------------------------------  FIN PAGE CONSOMMABLE ------------------------
+    #ajouterCompteur.tab-pane.fade
+      %h2 Ajouter Compteur
+      = simple_form_for @releve_compteur do |f|
+        .CSSTableGenerator
+          %table
+            %tr
+              %td Description :
+            %tr
+              %td
+                .col-md-9{:style => "width: 100%"}
+                  .form-group
+                    = f.cktext_area :description_releve_compteurs, label: false 
+          = f.hidden_field :printer_id, :value => @printer.id
+          = f.hidden_field :consommable_id, :value => @consommable.id
+          = f.hidden_field :valide_releve_compteurs, :value => false
+          %table
+            %tr
+            %tr
+              %td
+                .modal-footer{:align => "center"}
+                  = f.button :submit, class: "btn btn-primary btn-block", :value => 'Valider'
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+
+    
+      
+ 

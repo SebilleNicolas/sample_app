@@ -1,4 +1,0 @@
-class PrintersConsosController < ApplicationController
-	
-	
-end

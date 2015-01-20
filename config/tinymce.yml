@@ -1,6 +1,11 @@
+menu : false
+menubar : false
+
 toolbar:
   - styleselect | bold italic | undo redo
-  - image | link
 plugins:
   - image
-  - link
+resize: false
+width: 100%
+height: 100%
+spellcheck: false

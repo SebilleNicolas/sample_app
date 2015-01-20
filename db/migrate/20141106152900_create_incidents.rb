@@ -1,11 +1,11 @@
 class CreateIncidents < ActiveRecord::Migration
   def change
     create_table :incidents do |t|
-    	t.string :codeIncidents
-    	t.string :intituleIncidents
-    	t.string :descriptionIncidents
-    	t.string :solutionIncidents
-    	t.boolean :valideIncidents
+    	t.string :code_incidents
+    	t.string :intitule_incidents
+    	t.string :description_incidents
+    	t.string :solution_incidents
+    	t.boolean :valide_incidents
 
       t.timestamps
     end

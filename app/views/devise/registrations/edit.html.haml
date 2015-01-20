@@ -1,0 +1,56 @@
+%h2{:align => "center"}
+  %b
+    %u Modifier Profil :
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: { confirm: "Etes vous sur de vouloir modifier ?" }) do |f|
+  = f.error_notification
+  .form-inputs
+    %table{:align => "center", :style => "border:none;"}
+      %tr
+        %td
+          = f.label "Email : " , required: true
+        %td= f.input :email, required: true, autofocus: true, label: false
+      %tr
+        %td
+          = f.label "Login : " , required: true
+        %td
+          = f.input :login, required: true, label: false
+      %tr
+        %td= f.label "Nom : " , required: true
+        %td
+          = f.input :last_name, required: true, label: false
+      %tr
+        %td= f.label "Prenom : " , required: true
+        %td= f.input :first_name, required: true, label: false
+      - if current_user.is? :ADMIN 
+        %tr
+          %td= f.label "Statut : "
+          %td
+            = f.collection_select :role, User::ROLES, :to_s, :humanize
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      %p
+        Currently waiting confirmation for: #{resource.unconfirmed_email}
+    %h4
+      Changer
+      %b Mot de passe :
+    %table{:align => "center", :style => "border:none;"}
+      %tr
+        %td= f.label "Mot de passe actuel : "
+        %td= f.input :current_password, required: false, label: false
+      %tr
+        %td= f.label "Nouveau mot de passe : "
+        %td= f.input :password, autocomplete: "off", required: false, label: false
+      %tr
+        %td= f.label "Confirmer Mot de passe : "
+        %td= f.input :password_confirmation, required: false, label: false
+  .form-actions{:align => "center"}
+    = f.button :submit, "Modifier" , class: "btn btn-lg btn-primary "
+/
+  <h3>Cancel my account</h3>
+  
+  <p>Unhappy?
+= link_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Etes vous sur de vouloir supprimer votre compte ?" }, method: :delete
+/
+  </p>
+  
+  data: { confirm: "Êtes-vous sur de vouloir enregistrer ces modifications ?" },
+= link_to "Back", :back

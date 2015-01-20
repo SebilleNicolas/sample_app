@@ -1,0 +1,22 @@
+%h2= "Recherche pour : '#{@param}'"
+
+-if @search.count < 1
+  %p= "il n'y a pas de résultat a votre recherche '#{@param}'."
+-else
+  
+  %table{:align => "center", :style => "width: 500px; border:none;"}
+    %thead
+      %tr
+        %td{:align => "center"}
+          %b ID
+        %td{:align => "center"}
+          %b CodeIncident
+             
+    %tbody
+      - @search.each do |incident|
+       
+        %tr
+          %td{:align => "center"}
+            = link_to incident.id, incident
+          %td{:align => "center"}
+            = link_to incident.code_incidents, incident

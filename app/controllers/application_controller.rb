@@ -5,7 +5,13 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   #before_action :set_locale
   before_filter :configure_permitted_parameters, if: :devise_controller?
-
+  @@NbIncidents = Incident.all.count
+  
+  def after_sign_in_path_for(resource)
+    if current_user.valide?
+      request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    end
+  end
 
    protected
   
@@ -39,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   #METHODE 3 (Fonctionne)
     devise_parameter_sanitizer.for(:sign_up) do |u|
-      u.permit(:first_name, :last_name, :username, :email,:login, :password, :password_confirmation, :role)
+      u.permit(:first_name, :last_name, :username, :email,:login, :password, :password_confirmation, :role, :valide)
     end
     devise_parameter_sanitizer.for(:account_update) do |u|
       u.permit(:first_name, :last_name, :username, :login, :email,:current_password, :password, :password_confirmation, :role)

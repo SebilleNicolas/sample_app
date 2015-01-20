@@ -1,8 +1,8 @@
 class CreatePrinters < ActiveRecord::Migration
   def change
     create_table :printers do |t|
-	  	t.string 	 :codePrinters
-    	t.string 	 :descriptionPrinters
+	  	t.string 	 :code_printers
+    	t.text 	 :description_printers
      t.timestamps		
     end
   end

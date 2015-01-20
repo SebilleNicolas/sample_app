@@ -7,12 +7,15 @@ class Ability
       user ||= User.new # guest user (not logged in)
       if user.is? :ADMIN
         can :manage, :all
-      elsif user.is? :HL1
+      elsif user.is? :HL2
         can :create, Incident
         can :valide, Incident
+        
         can :crud, Consommable
         can :read, Printer
         can :update, Printer
+        # can :valide, Releve_compteur
+        # can :valide, Compteur
       else
         can :read, :all
       end

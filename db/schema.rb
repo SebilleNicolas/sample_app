@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107105752) do
+ActiveRecord::Schema.define(version: 20141218144754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,42 +23,49 @@ ActiveRecord::Schema.define(version: 20141107105752) do
   end
 
   create_table "attachments", force: true do |t|
-    t.string   "titreAttachments"
-    t.date     "dateAjout"
+    t.string   "file"
+    t.string   "type_attachment"
+    t.integer  "printer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "consommables", force: true do |t|
-    t.string   "codeConsommables"
-    t.string   "designationConsommables"
-    t.boolean  "valideConsommables"
+    t.string   "code_consommables"
+    t.string   "designation_consommables"
+    t.boolean  "valide_consommables"
+    t.string   "duree_vie_consommables"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "printer_id"
   end
 
   create_table "incidents", force: true do |t|
-    t.string   "codeIncidents"
-    t.string   "intituleIncidents"
-    t.string   "descriptionIncidents"
-    t.string   "solutionIncidents"
-    t.boolean  "valideIncidents"
+    t.string   "code_incidents"
+    t.string   "intitule_incidents"
+    t.string   "description_incidents"
+    t.string   "solution_incidents"
+    t.boolean  "valide_incidents"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "printer_id"
   end
 
-  create_table "printer_consos", force: true do |t|
+  create_table "printers", force: true do |t|
+    t.string   "code_printers"
+    t.string   "description_printers"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "printers_consommables", force: true do |t|
     t.integer  "consommable_id"
     t.integer  "printer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "printers", force: true do |t|
-    t.string   "codePrinters"
-    t.string   "descriptionPrinters"
+  create_table "printers_incidents", force: true do |t|
+    t.integer  "incident_id"
+    t.integer  "printer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -73,8 +80,9 @@ ActiveRecord::Schema.define(version: 20141107105752) do
   end
 
   create_table "releve_compteurs", force: true do |t|
-    t.string   "descriptionRC"
-    t.boolean  "valideRC"
+    t.string   "description_releve_compteurs"
+    t.boolean  "valide_releve_compteurs"
+    t.integer  "printer_id_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

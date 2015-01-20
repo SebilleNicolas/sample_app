@@ -1,0 +1,30 @@
+%h2= "Recherche pour : '#{@param}'"
+
+-if @search.count < 1
+  %p= "il n'y a pas de résultat a votre recherche '#{@param}'."
+-else
+  
+  %table{:align => "center", :style => "width: 700px; border:none;"}
+    %thead
+      %tr
+        %td{:align => "center"}
+          %b ID
+        %td{:align => "center"}
+          %b Code
+        %td{:align => "center"}
+          %b Nombre Incidents
+        %td{:align => "center"}
+          %b Nombre Consommables
+             
+    %tbody
+      - @search.each do |printer|
+       
+        %tr
+          %td{:align => "center"}
+            = link_to printer.id, printer
+          %td{:align => "center"}
+            = link_to printer.code_printers, printer
+          %td{:align => "center"}
+            = link_to printer.incidents.count, printer
+          %td{:align => "center"}
+            = link_to printer.consommables.count, printer

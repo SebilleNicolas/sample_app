@@ -1,0 +1,49 @@
+%h2 Incidents Non validé :
+
+%table{:align => "center", :style => "border:none; width: 500px;"}
+  %thead
+    %tr
+      %td{:align => "center"}
+        %b ID
+      %td{:align => "center"}
+        %b Code incident
+      %td{:align => "center"}
+        %b Valider
+      %td{:align => "center"}
+        %b Supprimer
+  %tbody
+    - @incidents_false.each do |incident|
+      %tr
+        %td{:align => "center"}
+          = link_to incident.id, incident
+        %td{:align => "center"}
+          = link_to "#{incident.code_incidents}", incident
+        %td{:align => "center"}
+          = simple_form_for incident , url: update_valide_incident_path(incident),data: { confirm: "Etes vous sur de vouloir valider cette incident ?" },:method => 'patch'  do |f| |
+            = f.hidden_field :valide_incidents, :value => true
+            = f.button :submit, class: "btn btn-primary", :value => 'valider'
+        %td{:align => "center"}
+          = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+%h2 Incidents validé :
+
+%table{:align => "center", :style => "border:none; width: 500px;"}
+  %thead
+    %tr
+      %td{:align => "center"}
+        %b ID
+      %td{:align => "center"}
+        %b Code incident
+
+      %td{:align => "center"}
+        %b Supprimer
+  %tbody
+    - @incidents_true.each do |incident|
+      %tr
+        %td{:align => "center"}
+          = link_to incident.id, incident
+        %td{:align => "center"}
+          = link_to "#{incident.code_incidents}", incident
+       
+        %td{:align => "center"}
+          = link_to 'Supprimer', incident, :remote => true, method: :delete, data: { confirm: "Etes vous sur de vouloir supprimer l'incident?" },:class => 'delete_incident'
+

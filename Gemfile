@@ -19,6 +19,11 @@ gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'rmagick', '2.13.2', :git=>'http://github.com/rmagick/rmagick.git'
+gem 'fog'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -33,6 +38,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+gem 'rails3-jquery-autocomplete'
+gem 'haml'
+gem 'haml-rails'
+gem 'rails4-autocomplete'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -47,6 +56,19 @@ gem 'spring',        group: :development
 
 gem 'tinymce-rails', '~> 4.1.5'
 
-
 gem 'devise'
+#gem 'awesome_print', '~> 1.2.0'
 gem "cancan"
+gem 'ckeditor'
+gem "d3-rails"
+	# gem "algoliasearch-rails"
+
+	# gem 'jdbc-mysql'
+	# gem 'thinking-sphinx', '~> 3.1.1'
+	# gem 'sphinx'
+	# gem "mysql2"
+
+	# gem 'elasticsearch'
+	# gem 'sunspot_rails'
+
+	# gem 'sunspot_solr'

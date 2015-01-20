@@ -1,16 +1,98 @@
 SampleApp::Application.routes.draw do
  
-  devise_for :users , :controllers => { :registrations => "registrations" }
-  resources :printers
+  get 'releves_compteurs/new'
+
+  devise_for :users , :controllers => { :registrations => "registrations",:users => "users",:sessions => "sessions"}#, :passwords => "passwords" }
+  resources :printers_consommables
+  # resources :printers, :member => {:download => :get }
+  resources :attachments do
+    member do
+      post :add_img  
+    end
+    collection do 
+
+    end
+  end
+
+  resources :printers do
+
+    member do
+      patch :update_description
+      patch :update_code_printers  
+      
+    end
+    collection do
+      get :autocomplete_printer_code_printers
+      get :search
+
+    end
+    resources  :download do
+      collection do 
+        get :show
+    end
+    end
+  end
+
+
+
+  resources :pages do
+    get :search , :on => :collection 
+    get :autocomplete_incident_code_incidents, :on => :collection 
+  end
+
+
+
+
    resources :incidents do
     member do
       put :showAllIncidents
+      delete :remove
+      patch :update_valide
+      delete :delete
+    end
+     get :search , :on => :collection 
+  end
+
+
+
+
+  resources :consommables do
+    member do
+      patch :update  
+      patch :update_valide
+      post :add_consommables_printer  
+      delete :delete
+    end
+    collection do 
+      
     end
   end
-  resources :consommables
- 
-  
 
+  resources :releve_compteurs do
+    member do
+      delete :delete
+      patch :valide
+    end
+  end
+  
+  resources :users do
+    member do
+      patch :update_valide
+      patch :update_role
+    end
+    collection do
+      get :manage
+    end
+  end
+ devise_for :sessions do
+  member do
+    post :create
+  end
+  collection do
+    get :deconnexion
+
+  end
+end
   # devise_for :users, :controllers => { :registrations => "registrations" }, :skip => [:registrations, :sessions] do 
 
   #   get 'signup' => 'devise/registrations#new', :as => :new_user_registration 
@@ -25,14 +107,28 @@ SampleApp::Application.routes.draw do
   #   delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
 
   # end
-  match '/new', :to => 'users#new' , :via => [:get]
-  match '/edit',    :to => 'users#edit', :via => [:get]
 
-  match '/show',    :to => 'printers#show', :via => [:get], :controllers => { :printers => "printers" }
 
-  match '/show',    :to => 'consommables#show', :via => [:get], :controllers => { :consommables => "consommables" }
 
-  match '/show',    :to => 'incidents#show', :via => [:get], :controllers => { :incidents => "incidents" }
+
+
+
+
+  # match '/new', :to => 'users#new' , :via => [:get]
+  # match '/edit',    :to => 'users#edit', :via => [:get]
+  # match '/show',    :to => 'users#show', :via => [:get]
+  # match '/manage',    :to => 'users/devise#manage', :via => [:get]
+
+
+  # match '/show',    :to => 'printers#show', :via => [:get], :controllers => { :printers => "printers" }
+  # match '/test',    :to => 'printers#test', :via => [:get], :controllers => { :printers => "printers" }
+
+  # match '/show',    :to => 'consommables#show', :via => [:get], :controllers => { :consommables => "consommables" }
+  # match '/show',    :to => 'consommables#update', :via => [:put], :controllers => { :consommables => "consommables" }
+  # match '/show',    :to => 'consommables#show', :via => [:delete], :controllers => { :consommables => "consommables" }
+
+  # match '/show',    :to => 'incidents#show', :via => [:get], :controllers => { :incidents => "incidents" }
+  # match '/show',    :to => 'incidents#show', :via => [:delete], :controllers => { :incidents => "incidents" }
 
   match '/contact', :to => 'pages#contact' , :via => [:get]
   match '/about',   :to => 'pages#about', :via => [:get]
@@ -41,14 +137,13 @@ SampleApp::Application.routes.draw do
   match '/home',    :to => 'pages#home', :via => [:get]
   match '/inscrip2',    :to => 'pages#inscrip2', :via => [:get]
   match '/test',    :to => 'pages#test', :via => [:get]
-  match '/ajouterImprimante',    :to => 'pages#ajouterImprimante', :via => [:get]
-
+  match '/manage',    :to => 'pages#manage', :via => [:get]
 
 
   match '/index',    :to => 'printers#index', :via => [:get], :controllers => { :printers => "printers" }
 
 
-  root :to => 'pages#inscription'
+  root :to => 'printers#index'
   # if user_signed_in?
   #   root :to => 'pages#inscription'
   # else

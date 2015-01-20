@@ -1,0 +1,34 @@
+
+%h1{:align => "center"} Ajouter Imprimante
+.CSSTableGenerator
+  = simple_form_for @printer do |f|
+    %table
+      %tr
+        %td Code Imprimante :
+        %td Description Imprimante :
+
+      %tr
+        %td.info
+          .col-lg-9
+            .input-group
+              = f.input :code_printers , :input_html => { :style => "width:250px" }, label: false
+
+        %td
+          .col-lg-9
+            .input-group
+              = f.cktext_area :description_printers 
+      %tr
+        %td
+          
+          = f.simple_fields_for :attachments do |p| 
+            = p.input :file, as: :file, label: "image"
+        %td
+          %span.input-group-btn
+            = f.button :submit, class: "btn btn-primary btn-block", value:'Valider'
+
+%br/
+%br/
+%br/ 
+
+
+
