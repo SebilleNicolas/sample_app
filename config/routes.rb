@@ -59,12 +59,12 @@ SampleApp::Application.routes.draw do
   resources :consommables do
     member do
       patch :update  
-      patch :update_valide
+      
       post :add_consommables_printer  
       delete :delete
     end
     collection do 
-      
+      get :update_valide
     end
   end
 

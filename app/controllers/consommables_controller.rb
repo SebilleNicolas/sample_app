@@ -32,31 +32,33 @@ class ConsommablesController < ApplicationController
 		
 	end
 	def show
-    @consommable = Consommable.find(params[:id])
-    @printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
-    @printer = Printer.find(@printer_conso.printer_id)
-    @titre = "CONSO"
-  end	
+	    @consommable = Consommable.find(params[:id])
+	    @printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
+	    @printer = Printer.find(@printer_conso.printer_id)
+	    @titre = "CONSO"
+	end
 
-  def delete
+  	def delete
 		@consommable = Consommable.find(params[:id])
 		@printer_conso = PrintersConsommable.find_by consommable_id: @consommable.id
-    @printer = Printer.find(@printer_conso.printer_id)
-    if @consommable.destroy
-    	flash[:notice] = "Le consommable a bien été supprimé."
-  	else
-  		flash[:alert] = "Le consommable n'a pas été supprimé."
-  	end
-    redirect_to @printer
-  end
+	    @printer = Printer.find(@printer_conso.printer_id)
+	    if @consommable.destroy
+	    	flash[:notice] = "Le consommable a bien été supprimé."
+	  	else
+	  		flash[:alert] = "Le consommable n'a pas été supprimé."
+	  	end
+	    redirect_to @printer
+	end
+
+
 	def destroy
  		@consommable = Consommable.find(params[:id])
-    @consommable.destroy
-    respond_to do |format|
-      format.html { redirect_to consommables_url }
-      format.json { head :no_content }
-      format.js   { render :layout => false }
-    end
+	    @consommable.destroy
+	    respond_to do |format|
+	      format.html { redirect_to consommables_url }
+	      format.json { head :no_content }
+	      format.js   { render :layout => false }
+	    end
 	end
 
 	def update_valide
@@ -68,13 +70,17 @@ class ConsommablesController < ApplicationController
 		# puts @printer.to_yaml
 		# puts '*********************************************************'
 		# puts '*********************************************************'
-    if @consommable.update(:valide_consommables => 'true')
-      
-      redirect_to @printer
-      flash[:notice] = "Le Consommable a été validé "
-    else
-      render 'edit'
-    end
+	    
+	    # if @consommable.update(:valide_consommables => 'true')
+	    #   redirect_to @printer
+	    #   flash[:notice] = "Le Consommable a été validé "
+	    # else
+	    #   render 'edit'
+	    # end
+	    puts "anus"
+	    @consommable.update_attributes(:valide_consommables => true)
+
+	    render nothing: true
 	end
 
 	def update
